@@ -174,19 +174,19 @@ function dc_manage_codes() {
 
 			echo '<tr valign="top">';
 			echo '<th scope="row"><label for="new-prefix">Code Prefix</label></th>';
-			echo '<td><input type="text" name="prefix" id="new-prefix" class="small-text" value="' . $post_prefix . '" />';
+			echo '<td><input type="text" name="prefix" id="new-prefix" class="small-text" value="' . $_POST[ 'prefix' ] . '" />';
 			echo ' <span class="description">First characters of each code</span></td>';
 			echo '</tr>';
 
 			echo '<tr valign="top">';
 			echo '<th scope="row"><label for="new-quantity">Quantity</label></th>';
-			echo '<td><input type="text" name="codes" id="new-quantity" class="small-text" maxlength="5" value="' . $post_codes .'" />';
+			echo '<td><input type="text" name="codes" id="new-quantity" class="small-text" maxlength="5" value="' . $_POST[ 'codes' ] .'" />';
 			echo ' <span class="description">Number of codes to generate</span></td>';
 			echo '</tr>';
 
 			echo '<tr valign="top">';
 			echo '<th scope="row"><label for="new-length">Length</label></th>';
-			echo '<td><input type="text" name="characters" id="new-length" class="small-text" maxlength="2" value="' . ( $post_characters != '' ? $post_characters : '8' ) .'" />';
+			echo '<td><input type="text" name="characters" id="new-length" class="small-text" maxlength="2" value="' . ( $_POST[ 'characters' ] != '' ? $_POST[ 'characters' ] : '8' ) .'" />';
 			echo ' <span class="description">Number of random characters each code contains</span></td>';
 			echo '</tr>';
 
