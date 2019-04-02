@@ -1,7 +1,7 @@
 <?php
 /**
  * WP Download Codes Plugin
- * 
+ *
  * FILE
  * includes/admin/main.php
  *
@@ -25,7 +25,7 @@ function dc_init() {
 	global $wpdb;
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	
+
 	$sql = "CREATE TABLE `" . dc_tbl_codes() . "` (
 				   `ID` int(11) NOT NULL auto_increment,
 				   `group` int(11) NOT NULL,
@@ -43,7 +43,7 @@ function dc_init() {
 					PRIMARY KEY  (`ID`)
 				 );";
 	dbDelta( $sql );
-	
+
 	$sql = "CREATE TABLE `" . dc_tbl_downloads() . "` (
 				   `ID` int(11) NOT NULL auto_increment,
 				   `IP` varchar(20) NOT NULL,
@@ -64,34 +64,34 @@ function dc_init() {
 				   PRIMARY KEY  (`ID`)
 				 );";
 	dbDelta( $sql );
-	
+
 	// In version 2.0, code groups were introduced, therefore when
 	// upgrading from a prior version, it has to be ensured
 	// that initial code groups are created for every group
 	// of code prefixes
-	
+
 	// Retrieve all codes without a code group
 	$sql = "
 		SELECT	DISTINCT c.code_prefix AS `prefix`, c.release AS `release`
 		FROM	". dc_tbl_codes() . " c
 		WHERE	c.group IS NULL OR c.group = 0";
 	$code_groups = $wpdb->get_results( $sql );
-		
+
 	foreach ( $code_groups as $code_group ) {
 		// Create a new code group
 		$wpdb->insert(	dc_tbl_code_groups(), array( 'release' => $code_group->release ), array ( '%d' ));
-		
+
 		// Get the id of the new code group
 		$code_group_id = $wpdb->insert_id;
-		
+
 		// Update the affected codes with the new code group id
-		$wpdb->update(	dc_tbl_codes(), 
+		$wpdb->update(	dc_tbl_codes(),
 						array( 'group' => $code_group_id ),
 						array( 'code_prefix' => $code_group->prefix, 'release' => $code_group->release ),
 						array( '%d' ),
 						array( '%s', '%d' ));
-	}	
-	
+	}
+
 	// Set current plugin version (for future use)
 	update_option( 'dc_version', '2.0' );
 }
@@ -114,11 +114,10 @@ function dc_uninstall() {
 	delete_option( 'dc_file_location' );
 	delete_option( 'dc_file_types' );
 	delete_option( 'dc_version' );
-	
+
 	// Delete database tables
 	$wpdb->query( "DROP TABLE " . dc_tbl_downloads() );
 	$wpdb->query( "DROP TABLE " . dc_tbl_codes() );
 	$wpdb->query( "DROP TABLE " . dc_tbl_code_groups() );
 	$wpdb->query( "DROP TABLE " . dc_tbl_releases() );
 }
-?>

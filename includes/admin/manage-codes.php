@@ -90,18 +90,19 @@ function dc_manage_codes() {
 	if ( sizeof( $releases ) == 0) {
 		// Display message if no release exists yet
 		echo dc_admin_message( 'No releases have been created yet' );
-		echo '<p><a class="button-primary" href="admin.php?page=dc-manage-releases&amp;action=add">Add New Release</a></p>';
+		echo '<p><a class="button-primary" href="' . dc_admin_url( 'dc-manage-releases', array( 'action' => 'add' ) ) . '">Add New Release</a></p>';
+
 	}
 	else {
 		// There are some releases
-		echo '<form action="admin.php?page=dc-manage-codes&action=select" method="post">';
+		echo '<form action="' . dc_admin_url( 'dc-manage-codes', array( 'action' => 'select' ) ) . '" method="post">';
 		echo '<input type="hidden" name="action" value="select" />';
 
 		// Display release picker
 		echo '<h3>Select a Release: ';
 		echo '<select name="release" id="release" onchange="submit();">';
 		foreach ( $releases as $release ) {
-			echo '<option value="' . $release->ID . '"' . ( $release->ID == $release_id ? ' selected="selected"' : '' ) . '>' . ( $release->artist ? $release->artist . ' - ' : '' ) . $release->title . ' (' . $release->filename . ')</option>';
+			echo '<option value="' . $release->ID . '" ' . ( $release->ID == $release_id ? 'selected="selected"' : '' ) . '>' . ( $release->artist ? $release->artist . ' - ' : '' ) . $release->title . ' (' . $release->filename . ')</option>';
 		}
 		echo '</select>';
 		echo '</h3>';
@@ -165,7 +166,7 @@ function dc_manage_codes() {
 			}
 
 			// Show form to add codes
-			echo '<form id="form-manage-codes" action="admin.php?page=dc-manage-codes&amp;action=generate" method="post">';
+			echo '<form id="form-manage-codes" action="' . dc_admin_url( 'dc-manage-codes', array( 'action' => 'generate' ) ) . '" method="post">';
 			echo '<input type="hidden" name="release" value="' . $release->ID . '" />';
 
 			echo '<h3>Generate New Batch of Codes</h3>';
@@ -199,7 +200,7 @@ function dc_manage_codes() {
 			echo '</form>';
 
 			// Show form to import existing codes
-			echo '<form action="admin.php?page=dc-manage-codes&amp;action=import" method="post">';
+			echo '<form action="' . dc_admin_url('dc-manage-codes', array( 'action' => 'import' ) ) . '" method="post">';
 			echo '<input type="hidden" name="release" value="' . $release->ID . '" />';
 
 			echo '<h3>Import Existing Download Codes</h3>';
@@ -244,4 +245,3 @@ function dc_manage_codes() {
 	}
 	echo '</div>';
 }
-?>

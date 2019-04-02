@@ -15,6 +15,8 @@
 function dc_manage_releases() {
 	global $wpdb;
 
+	$add_success = false;
+
 	$wpdb->query('SET OPTION SQL_BIG_SELECTS = 1');
 
 	// Get parameters
@@ -62,7 +64,7 @@ function dc_manage_releases() {
 							echo dc_admin_message( 'There was an error updating the release' );
 						else {
 							echo dc_admin_message( 'The release was updated successfully' );
-							$edit_success = true;
+							// $edit_success = true;
 						}
 					}
 				}
@@ -97,6 +99,15 @@ function dc_manage_releases() {
 			echo dc_admin_message( 'No files have been uploaded to the releases folder: <em>' . dc_file_location() . '</em></p><p><strong>You must do this first before adding a release!</strong>' );
 		}
 
+		$release = new stdClass();
+		$release->ID = '';
+		$release->title = '';
+		$release->artist = '';
+		$release->hosting_type = '';
+		$release->filename = '';
+		$release->url = '';
+		$release->allowed_downloads = '';
+
 		// Get current release
 		if ( '' != $get_release ) {
 			$release = dc_get_release( $get_release );
@@ -107,11 +118,11 @@ function dc_manage_releases() {
 
 		// Write page subtitle
 		echo '<h3>' . ( ( 'add' == $get_action ) ? 'Add New' : 'Edit' ) . ' Release</h3>';
-		echo '<p><a href="admin.php?page=dc-manage-releases">&laquo; Back to releases</a></p>';
+		echo '<p><a href="' . dc_admin_url( 'dc-manage-releases' ) . '">&laquo; Back to releases</a></p>';
 
 
 		// Display form
-		echo '<form action="admin.php?page=dc-manage-releases&action=' . $get_action . '" method="post">';
+		echo '<form action="' . dc_admin_url( 'dc-manage-releases', array( 'action' => $get_action) ) . '" method="post">';
 		echo '<input type="hidden" name="release" value="' . $release->ID . '" />';
 		echo '<input type="hidden" name="action" value="' . $get_action . '" />';
 
@@ -194,7 +205,7 @@ function dc_manage_releases() {
 		// Check if the releases are empty
 		if ( sizeof( $releases ) == 0) {
 			echo dc_admin_message( 'No releases have been created yet' );
-			echo '<p>You might want to <a href="admin.php?page=dc-manage-releases&action=add">add a new release</a></p>';
+			echo '<p>You might want to <a href="' . dc_admin_url( 'dc-manage-releases', array( 'action' => 'add' ) ) . '">add a new release</a></p>';
 		}
 		else {
 			echo '<table class="widefat">';
@@ -205,20 +216,37 @@ function dc_manage_releases() {
 
 			echo '<tbody>';
 			foreach ( $releases as $release ) {
-				echo '<tr>';
-				echo '<td><strong>' . $release->title . '</strong></td><td>' . $release->artist . '</td>';
-				echo '<td>' . $release-> ID . '</td>';
-				echo '<td>' . dc_get_hosting_types()[$release->hosting_type] . '</td>';
-				echo '<td>' . ( dc_is_default_hosting_type( $release->hosting_type ) ? $release->filename : $release->url ) . '</td>';
-				echo '<td>' . $release->codes . '</td><td>' . $release->downloads . '</td>';
-				echo '<td>';
-				echo '<a href="admin.php?page=dc-manage-releases&amp;release=' . $release->ID . '&amp;action=edit" class="action-edit">Edit</a> | ';
-				echo '<a href="admin.php?page=dc-manage-codes&amp;release=' . $release->ID . '" class="action-manage">Manage codes</a> | ';
-				echo '<a href="admin.php?page=dc-manage-codes&amp;release=' . $release->ID . '&amp;action=report" class="action-report" rel="dc_downloads-' . $release->ID . '">View report</a> | ';
-				echo '<a href="admin.php?page=dc-manage-releases&amp;release=' . $release->ID . '&amp;action=delete" class="action-delete">Delete</a>';
-				echo '</td>';
-				echo '</tr>';
-			}
+
+                $linkEdit = dc_admin_url( 'dc-manage-releases', array(
+                    'release' => $release->ID,
+                    'action'  => 'edit',
+                ) );
+                $linkManage = dc_admin_url( 'dc-manage-codes', array(
+                    'release' => $release->ID,
+                ) );
+                $linkReport = dc_admin_url( 'dc-manage-codes', array(
+                    'release' => $release->ID,
+                    'action'  => 'report',
+                ) );
+                $linkDelete = dc_admin_url( 'dc-manage-releases', array(
+                    'release' => $release->ID,
+                    'action'  => 'delete',
+                ) );
+
+                echo '<tr>';
+                echo '<td><strong>' . $release->title . '</strong></td><td>' . $release->artist . '</td>';
+                echo '<td>' . $release->ID . '</td>';
+                echo '<td>' . dc_get_hosting_types()[ $release->hosting_type ] . '</td>';
+                echo '<td>' . ( dc_is_default_hosting_type( $release->hosting_type ) ? $release->filename : $release->url ) . '</td>';
+                echo '<td>' . $release->codes . '</td><td>' . $release->downloads . '</td>';
+                echo '<td>';
+                echo '<a href="' . $linkEdit . '" class="action-edit">Edit</a> | ';
+                echo '<a href="' . $linkManage . '" class="action-manage">Manage codes</a> | ';
+                echo '<a href="' . $linkReport . '" class="action-report" rel="dc_downloads-' . $release->ID . '">View report</a> | ';
+                echo '<a href="' . $linkDelete . '" class="action-delete">Delete</a>';
+                echo '</td>';
+                echo '</tr>';
+            }
 			echo '</tbody>';
 
 			echo '<tfoot>';
@@ -233,9 +261,9 @@ function dc_manage_releases() {
 		}
 
 		// Show link to add a new release
-		echo '<p><a class="button-primary" href="admin.php?page=dc-manage-releases&amp;action=add">Add New Release</a></p>';
+		echo '<p><a class="button-primary" href="' . dc_admin_url( 'dc-manage-releases', array( 'action' => 'add' ) ) . '">Add New Release</a></p>';
 	}
 
 	echo '</div>';
 }
-?>
+
