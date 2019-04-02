@@ -139,12 +139,32 @@ function dc_manage_codes() {
 
 					// Link to make codes final/delete codes or to export final codes
 					if ( $code_group->final == 0 ) {
-						echo '<a href="admin.php?page=dc-manage-codes&amp;release=' . $release->ID . '&amp;group=' . $code_group->group . '&amp;action=make-final" class="action-finalize">Finalize</a> | ';
-						echo '<a href="admin.php?page=dc-manage-codes&amp;release=' . $release->ID . '&amp;group=' . $code_group->group . '&amp;action=delete" class="action-delete">Delete</a>';
+					    $linkFinalize = dc_admin_url( 'dc-manage-codes' . array(
+					        'release' => $release->ID,
+                            'group' => $code_group->group,
+                            'action' => 'make-final',
+                        ) );
+					    $linkDelete   = dc_admin_url( 'dc-manage-codes' . array(
+					        'release' => $release->ID,
+                            'group' => $code_group->group,
+                            'action' => 'delete',
+                        ) );
+						echo '<a href="' . $linkFinalize . '" class="action-finalize">Finalize</a> | ';
+						echo '<a href="' . $linkDelete . '" class="action-delete">Delete</a>';
 					}
 					else {
-						echo '<a href="admin.php?page=dc-manage-codes&amp;release=' . $release->ID . '&amp;group=' . $code_group->group . '&amp;action=list" class="action-list" rel="dc_list-' . $code_group->group . '">List codes</a> | ';
-						echo '<a href="admin.php?page=dc-manage-codes&amp;release=' . $release->ID . '&amp;group=' . $code_group->group . '&amp;action=report" class="action-report" rel="dc_downloads-' . $code_group->group . '">View report</a>';
+                        $linkList   = dc_admin_url( 'dc-manage-codes' . array(
+                                'release' => $release->ID,
+                                'group' => $code_group->group,
+                                'action' => 'list',
+                            ) );
+                        $linkReport = dc_admin_url( 'dc-manage-codes' . array(
+                                'release' => $release->ID,
+                                'group' => $code_group->group,
+                                'action' => 'report',
+                            ) );
+						echo '<a href="' . $linkList . '" class="action-list" rel="dc_list-' . $code_group->group . '">List codes</a> | ';
+						echo '<a href="' . $linkReport . '" class="action-report" rel="dc_downloads-' . $code_group->group . '">View report</a>';
 					}
 
 					echo '</td></tr>';
@@ -162,7 +182,7 @@ function dc_manage_codes() {
 			foreach ( $code_groups as $code_group )
 			{
 				dc_list_codes( $release_id, $code_group->group, FALSE );
-				dc_list_downloads( $release_id, $code_group->group, FALSE, 'admin.php?page=dc-manage-codes&amp;action=reset' );
+				dc_list_downloads( $release_id, $code_group->group, FALSE, dc_admin_url( 'dc-manage-codes', array( 'action' => 'reset' ) ) );
 			}
 
 			// Show form to add codes
