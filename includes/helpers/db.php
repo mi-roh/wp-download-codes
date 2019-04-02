@@ -319,7 +319,7 @@ function dc_import_codes( $release_id, $prefix, $list_of_codes )
    global $wpdb;
    
    // Prepare array of import codes
-   $arr_codes = split( "\n", str_replace( "\r", '', $list_of_codes ) );
+   $arr_codes = explode( "\n", str_replace( "\r", '', $list_of_codes ) );
       
    // Verify code prefixes before inserting
    if ( '' != $prefix ) {
