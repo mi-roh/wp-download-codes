@@ -29,11 +29,11 @@ Author URI: http://www.misantropolis.de, http://quoperative.com
  * Default values (constants)
  */
  
-define( DC_MAX_ATTEMPTS, 3 );
-define( DC_ALLOWED_DOWNLOADS, 3 );
-define( DC_FILE_TYPES, 'zip, mp3' );
-define( DC_CODE_CHARS, 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789' );
-define( DC_HEADER_CONTENT_TYPE, 'Default (MIME Type)');
+define( 'DC_MAX_ATTEMPTS', 3 );
+define( 'DC_ALLOWED_DOWNLOADS', 3 );
+define( 'DC_FILE_TYPES', 'zip, mp3' );
+define( 'DC_CODE_CHARS', 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789-' );
+define( 'DC_HEADER_CONTENT_TYPE', 'Default (MIME Type)');
 
 /**
  * Include helper functions
