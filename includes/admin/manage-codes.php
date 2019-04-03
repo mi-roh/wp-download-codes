@@ -87,7 +87,7 @@ function dc_manage_codes() {
 			break;
 	}
 
-	if ( sizeof( $releases ) == 0) {
+	if ( count( $releases ) == 0) {
 		// Display message if no release exists yet
 		echo dc_admin_message( 'No releases have been created yet' );
 		echo '<p><a class="button-primary" href="' . dc_admin_url( 'dc-manage-releases', array( 'action' => 'add' ) ) . '">Add New Release</a></p>';
@@ -112,7 +112,7 @@ function dc_manage_codes() {
 		$code_groups = dc_get_code_groups( $release_id );
 		$release = $code_groups[0];
 
-		if ( sizeof($code_groups) > 0) {
+		if ( count($code_groups) > 0) {
 			// Subtitle
 			echo '<h3>' . $release->artist . ' - ' . $release->title . ' (' . $release->filename . ') [ID: ' . $release->ID . ']</h3>';
 

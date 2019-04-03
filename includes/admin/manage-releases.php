@@ -161,7 +161,7 @@ function dc_manage_releases() {
 
 		foreach ( $files as $filename ) { // List all files matching the allowed extensions
 			$file_extension_array = preg_split( '/\./', $filename );
-			$file_extension = strtolower( $file_extension_array[ sizeof( $file_extension_array ) - 1 ] );
+			$file_extension = strtolower( $file_extension_array[ count( $file_extension_array ) - 1 ] );
 			if ( in_array( $file_extension, $allowed_file_types ) ) {
 				echo '<option' . ( $filename == $release->filename ? ' selected="selected"' : '' ) . '>' . $filename . '</option>';
 			}
@@ -205,7 +205,7 @@ function dc_manage_releases() {
         echo '<hr />';
 
         // Check if the releases are empty
-		if ( sizeof( $releases ) == 0) {
+		if ( count( $releases ) == 0) {
 			echo dc_admin_message( 'No releases have been created yet' );
 			echo '<p>You might want to <a href="' . dc_admin_url( 'dc-manage-releases', array( 'action' => 'add' ) ) . '">add a new release</a></p>';
 		}
