@@ -108,7 +108,7 @@ function dc_admin_url( $menuSlug = false, $arg = array() ) {
         $arg = array();
     }
 
-    $url = menu_page_url( $menuSlug );
+    $url = menu_page_url( $menuSlug, false );
 
     return add_query_arg( $arg, $url );
 }

@@ -16,7 +16,7 @@ function dc_manage_codes() {
 	global $wpdb;
 
 	// Set option to enable big SQL selects
-	$wpdb->query('SET OPTION SQL_BIG_SELECTS = 1');
+	$wpdb->query('SET SQL_BIG_SELECTS = 1');
 
 	// GET parameters
 	$get_release 	= isset( $_GET['release'] ) ? $_GET['release'] : '';
@@ -139,12 +139,12 @@ function dc_manage_codes() {
 
 					// Link to make codes final/delete codes or to export final codes
 					if ( $code_group->final == 0 ) {
-					    $linkFinalize = dc_admin_url( 'dc-manage-codes' . array(
+					    $linkFinalize = dc_admin_url( 'dc-manage-codes', array(
 					        'release' => $release->ID,
                             'group' => $code_group->group,
                             'action' => 'make-final',
                         ) );
-					    $linkDelete   = dc_admin_url( 'dc-manage-codes' . array(
+					    $linkDelete   = dc_admin_url( 'dc-manage-codes', array(
 					        'release' => $release->ID,
                             'group' => $code_group->group,
                             'action' => 'delete',
@@ -153,12 +153,12 @@ function dc_manage_codes() {
 						echo '<a href="' . $linkDelete . '" class="action-delete">Delete</a>';
 					}
 					else {
-                        $linkList   = dc_admin_url( 'dc-manage-codes' . array(
+                        $linkList   = dc_admin_url( 'dc-manage-codes', array(
                                 'release' => $release->ID,
                                 'group' => $code_group->group,
                                 'action' => 'list',
                             ) );
-                        $linkReport = dc_admin_url( 'dc-manage-codes' . array(
+                        $linkReport = dc_admin_url( 'dc-manage-codes', array(
                                 'release' => $release->ID,
                                 'group' => $code_group->group,
                                 'action' => 'report',
@@ -193,21 +193,29 @@ function dc_manage_codes() {
 
 			echo '<table class="form-table">';
 
+			$prefix       = isset( $_POST[ 'prefix' ] ) ? $_POST[ 'prefix' ] : '';
+			$codes        = isset( $_POST[ 'codes' ] ) ? $_POST[ 'codes' ] : '';
+			$characters   = intval( isset( $_POST[ 'characters' ] ) ? $_POST[ 'characters' ] : '' );
+			$characters   = empty( $characters ) ? 8 : $characters;
+			$importPrefix = isset( $_POST[ 'import-prefix' ] ) ? $_POST[ 'import-prefix' ] : '';
+			$importCodes  = isset( $_POST[ 'import-codes' ] ) ? $_POST[ 'import-codes' ] : '';
+
+
 			echo '<tr valign="top">';
 			echo '<th scope="row"><label for="new-prefix">Code Prefix</label></th>';
-			echo '<td><input type="text" name="prefix" id="new-prefix" class="small-text" value="' . $_POST[ 'prefix' ] . '" />';
+			echo '<td><input type="text" name="prefix" id="new-prefix" class="small-text" value="' . $prefix . '" />';
 			echo ' <span class="description">First characters of each code</span></td>';
 			echo '</tr>';
 
 			echo '<tr valign="top">';
 			echo '<th scope="row"><label for="new-quantity">Quantity</label></th>';
-			echo '<td><input type="text" name="codes" id="new-quantity" class="small-text" maxlength="5" value="' . $_POST[ 'codes' ] .'" />';
+			echo '<td><input type="text" name="codes" id="new-quantity" class="small-text" maxlength="5" value="' . $codes .'" />';
 			echo ' <span class="description">Number of codes to generate</span></td>';
 			echo '</tr>';
 
 			echo '<tr valign="top">';
 			echo '<th scope="row"><label for="new-length">Length</label></th>';
-			echo '<td><input type="text" name="characters" id="new-length" class="small-text" maxlength="2" value="' . ( $_POST[ 'characters' ] != '' ? $_POST[ 'characters' ] : '8' ) .'" />';
+			echo '<td><input type="text" name="characters" id="new-length" class="small-text" maxlength="2" value="' . $characters .'" />';
 			echo ' <span class="description">Number of random characters each code contains</span></td>';
 			echo '</tr>';
 
@@ -229,13 +237,13 @@ function dc_manage_codes() {
 
 			echo '<tr valign="top">';
 			echo '<th scope="row"><label for="import-prefix">Code Prefix</label></th>';
-			echo '<td><input type="text" name="import-prefix" id="import-prefix" class="small-text" value="' . $_POST['import-prefix'] . '" />';
+			echo '<td><input type="text" name="import-prefix" id="import-prefix" class="small-text" value="' . $importPrefix . '" />';
 			echo ' <span class="description">First characters of each code. It is recommended that all of your codes to be imported have a common prefix. If this is not the case, this field can be left empty.</span></td>';
 			echo '</tr>';
 
 			echo '<tr valign="top">';
 			echo '<th scope="row"><label for="import-codes">List of Codes</label></th>';
-			echo '<td><textarea name="import-codes" id="import-codes" cols="20" rows="20" class="small-text">' . $_POST['import-codes'] .'</textarea>';
+			echo '<td><textarea name="import-codes" id="import-codes" cols="20" rows="20" class="small-text">' . $importCodes .'</textarea>';
 			echo ' <span class="description">Plain list of codes to be imported (separated by linebreaks)</span></td>';
 			echo '</tr>';
 

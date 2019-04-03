@@ -17,7 +17,7 @@ function dc_manage_releases() {
 
 	$add_success = false;
 
-	$wpdb->query('SET OPTION SQL_BIG_SELECTS = 1');
+	$wpdb->query('SET SQL_BIG_SELECTS = 1');
 
 	// Get parameters
 	$get_action 	= isset( $_GET['action'] ) ? $_GET['action'] : '';
@@ -202,7 +202,9 @@ function dc_manage_releases() {
 		// Get releases
 		$releases = dc_get_releases();
 
-		// Check if the releases are empty
+        echo '<hr />';
+
+        // Check if the releases are empty
 		if ( sizeof( $releases ) == 0) {
 			echo dc_admin_message( 'No releases have been created yet' );
 			echo '<p>You might want to <a href="' . dc_admin_url( 'dc-manage-releases', array( 'action' => 'add' ) ) . '">add a new release</a></p>';
@@ -236,7 +238,7 @@ function dc_manage_releases() {
                 echo '<tr>';
                 echo '<td><strong>' . $release->title . '</strong></td><td>' . $release->artist . '</td>';
                 echo '<td>' . $release->ID . '</td>';
-                echo '<td>' . dc_get_hosting_types()[ $release->hosting_type ] . '</td>';
+                echo '<td>' . dc_get_hosting_type( $release->hosting_type ) . '</td>';
                 echo '<td>' . ( dc_is_default_hosting_type( $release->hosting_type ) ? $release->filename : $release->url ) . '</td>';
                 echo '<td>' . $release->codes . '</td><td>' . $release->downloads . '</td>';
                 echo '<td>';
