@@ -61,6 +61,10 @@ Yes, you can override the content type header which by default sends the MIME co
 
 Yes, if you have an Apache server running with mod_xsendfile (https://tn123.org/mod_xsendfile/) being installed and configured properly, you can turn on the respective setting in the Download Codes settings. The download then uses the plain x-sendfile header instead of streaming it with the general logic.
 
+= Can I set a Custom Role for the Administration of Codes =
+
+Yes, define the name of the role with a f.e. with a ```define( 'DC_CAPABILITY', 'dc_downloadCodes' )``` and apply the role to users with a tool f.e. like https://wordpress.org/plugins/user-role-editor/.
+
 == Screenshots ==
 
 
@@ -93,7 +97,7 @@ Yes, if you have an Apache server running with mod_xsendfile (https://tn123.org/
 = 2.3.0 =
 * Increased maximum number of download codes which can be created for one group from 9999 to 99999.
 * Introduced new feature to import existing codes for a release (in case users want to migrate their codes or create codes outside the plugin).
-* Modified the default constant for the allowed characters in order to avoid misleading ambiguities between 'O' (the character) and '0' (the number). 
+* Modified the default constant for the allowed characters in order to avoid misleading ambiguities between 'O' (the character) and '0' (the number).
 * Improved the resetting of codes.
 * Improved deletion of releases.
 
@@ -138,7 +142,7 @@ Yes, if you have an Apache server running with mod_xsendfile (https://tn123.org/
 = 1.2 =
 * Added possibility to specify the absolute path for the download file location in 'Settings'. This should help if in your wordpress installation the upload folder cannot be determined.
 
-= 1.1 = 
+= 1.1 =
 * Added functionality to edit list of allowed file types.
 * Added annotation to documentation about folder protection to avoid unauthorized downloading.
 * Applied minor bug fixes.
@@ -169,7 +173,7 @@ Yes, if you have an Apache server running with mod_xsendfile (https://tn123.org/
 
 = 1.0.3 =
 * Added "mp3" to the allowed file types.
-* Reworked constraints for fields on 'Manage Releases'. 
+* Reworked constraints for fields on 'Manage Releases'.
 
 = 1.0.2 =
 * Bug fix: (Existing) zip folders below the upload directory can now be selected via drop-down.

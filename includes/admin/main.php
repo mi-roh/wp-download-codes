@@ -12,6 +12,7 @@
 /**
  * Include further admin libraries
  */
+include( 'capabilities.php' );
 include( 'admin-menu.php' );
 include( 'manage-releases.php' );
 include( 'manage-codes.php' );
@@ -25,6 +26,8 @@ function dc_init() {
 	global $wpdb;
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+	dc_add_capabilities();
 
 	$sql = "CREATE TABLE `" . dc_tbl_codes() . "` (
 				   `ID` int(11) NOT NULL auto_increment,
@@ -120,4 +123,7 @@ function dc_uninstall() {
 	$wpdb->query( "DROP TABLE " . dc_tbl_codes() );
 	$wpdb->query( "DROP TABLE " . dc_tbl_code_groups() );
 	$wpdb->query( "DROP TABLE " . dc_tbl_releases() );
+
+	// Remove Capabilities
+    dc_remove_capabilities();
 }

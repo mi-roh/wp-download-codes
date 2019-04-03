@@ -21,13 +21,16 @@ function dc_admin_init() {
  * Creates the dc admin menu hooked with the administration menu
  */
 function dc_admin_menu() {
+
+    dc_init_capabilities();
+
 	$hooknames = array();
 
 	// Main menu (start with "Manage Releases")
 	$hooknames[] = add_menu_page(
 	    'Manage Releases',
         'Download Codes',
-        'manage_options',
+        DC_CAPABILITY,
         'dc-manage-releases',
         'dc_manage_releases',
         plugins_url( 'wp-download-codes/resources/icon.png' )
@@ -38,7 +41,7 @@ function dc_admin_menu() {
 	    'dc-manage-releases',
         'Manage Releases',
         'Manage Releases',
-        'manage_options',
+        DC_CAPABILITY,
         'dc-manage-releases',
         'dc_manage_releases'
     );
@@ -48,7 +51,7 @@ function dc_admin_menu() {
 	    'dc-manage-releases',
         'Manage Download Codes',
         'Manage Codes',
-        'manage_options',
+        DC_CAPABILITY,
         'dc-manage-codes',
         'dc_manage_codes'
     );
@@ -58,7 +61,7 @@ function dc_admin_menu() {
 	    'dc-manage-releases',
         'Download Code Settings',
         'Settings',
-        'manage_options',
+        DC_CAPABILITY,
         'dc-manage-settings',
         'dc_manage_settings'
     );
@@ -68,7 +71,7 @@ function dc_admin_menu() {
 	    'dc-manage-releases',
         'Download Codes Help',
         'Help',
-        'manage_options',
+        DC_CAPABILITY,
         'dc-help',
         'dc_help'
     );
