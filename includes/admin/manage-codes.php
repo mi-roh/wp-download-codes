@@ -41,7 +41,7 @@ function dc_manage_codes() {
     }
 
 	// Show page title
-	echo '<div class="wrap">';
+	echo '<div class="dc-download-codes dc-manage-codes wrap">';
 	echo '<h2>Download Codes &raquo; Manage Codes</h2>';
 
 	switch( $get_action )

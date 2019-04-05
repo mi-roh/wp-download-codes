@@ -16,6 +16,9 @@
 	var $lightbox, $overlay, $close, $content, $textarea;
 
 	$( function() {
+
+		var $root = $( '.dc-download-codes' );
+
 		// Add lightbox DOM elements
 		$lightbox = $( '<div id="dc_lightbox">' )
 			.appendTo( 'body' );
@@ -32,30 +35,28 @@
 
 		// Admin Page: Manage Codes
 
-		var $tableRoot = $( 'table.dc_codes' );
-
 		// Open lightbox to list download codes
-		$( 'a.action-list', $tableRoot ).on( 'click', function() {
+		$( 'a.action-list', $root ).on( 'click', function() {
 			return openLightbox( $( this ).attr( "rel" ), true );
 		} );
 
 		// Open lightbox to list downloads
-		$( 'a.action-report', $tableRoot ).on( 'click', function() {
+		$( 'a.action-report', $root ).on( 'click', function() {
 			return openLightbox( $( this ).attr( "rel" ) );
 		} );
 
 		// Add confirm step before deleting release
-		$( 'a.action-delete', $tableRoot ).on( 'click', function() {
+		$( 'a.action-delete', $root ).on( 'click', function() {
 			return confirm( "Are you absolutely sure? This cannot be undone!" );
 		} );
 
 		// Add confirm step before finalizing codes
-		$( 'a.action-finalize', $tableRoot ).on( 'click', function() {
+		$( 'a.action-finalize', $root ).on( 'click', function() {
 			return confirm( "Are you absolutely sure? Codes cannot be deleted after they're finalized. (Only the whole release can be deleted including all codes.)" );
 		} );
 
 		// Add confirm step if more than 500 download codes shall be created
-		$( "form#form-manage-codes" ).on( 'submit', function() {
+		$( "form#form-manage-codes", $root ).on( 'submit', function() {
 			// Get number of download codes to be created
 			var numberOfCodes = $( '#new-quantity', this ).val();
 
@@ -70,7 +71,7 @@
 		// Admin Page: Manage Releases
 
 		// Add handlers for hosting types
-		$( "#hosting_type" ).on( 'change', function() {
+		$( "#hosting_type", $root ).on( 'change', function() {
 			changeHostingType( $( this ).val() );
 		} ).trigger( 'change' );
 	} );

@@ -13,7 +13,7 @@
  * General download code plugin settings
  */
 function dc_manage_settings() {
-	echo '<div class="wrap">';
+	echo '<div class="dc-download-codes dc-download-code-settings wrap">';
 	echo '<h2>Download Codes &raquo; Settings</h2>';
 
 	// Overwrite existing options

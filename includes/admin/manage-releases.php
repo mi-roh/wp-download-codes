@@ -28,7 +28,7 @@ function dc_manage_releases() {
 	$post_release = isset( $_POST['release'] ) ? $_POST['release'] : '';
 
 	// Show page title
-	echo '<div class="wrap">';
+	echo '<div class="dc-download-codes dc-manage-releases wrap">';
 	echo '<h2>Download Codes &raquo; Manage Releases</h2>';
 
 	switch( $get_action )
