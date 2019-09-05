@@ -19,25 +19,20 @@ function dc_manage_codes() {
 	$wpdb->query('SET SQL_BIG_SELECTS = 1');
 
 	// GET parameters
-	$get_release 	= isset( $_GET['release'] ) ? $_GET['release'] : '';
-	$get_group	= isset( $_GET['group'] ) ? $_GET['group'] : '';
-	$get_action 	= isset( $_GET['action'] ) ? $_GET['action'] : '';
-
-	// POST parameters
-	$post_release	= isset( $_POST['release'] ) ? $_POST['release'] : '';
+	$get_group	 = isset( $_GET['group'] ) ? $_GET['group'] : '';
+	$get_action  = isset( $_GET['action'] ) ? $_GET['action'] : '';
 
 	// List of releases
 	$releases = dc_get_releases();
-	if ( $get_release == '' &&  $post_release == '' ) {
-		$release_id = $releases[0]->ID;
-	}
-	elseif ( $post_release != '') {
-		$release_id = $post_release;
-	}
-	elseif ( $get_release != '') {
-		$release_id = $get_release;
-	} else {
-	    $release_id = '';
+
+	// get Current Release
+	$release_id = '';
+	if ( isset( $_POST['release'] ) ) {
+	    $release_id = $_POST['release'];
+    } elseif ( isset( $_GET['release'] ) ) {
+		$release_id = $_GET['release'];
+    } elseif ( count( $releases ) > 0 ) {
+        $release_id = $releases[0]->ID;
     }
 
 	// Show page title
