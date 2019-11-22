@@ -125,7 +125,7 @@ function dc_get_hosting_type( $hosting_type = '' )
 		$hosting_type = 'WP_DIRECT';
 	}
 
-	return $types[ $hosting_type ];
+	return isset( $types[ $hosting_type ] ) ? $types[ $hosting_type ] : null;
 }
 
 /**
