@@ -1,4 +1,4 @@
-Clone of https://wordpress.org/plugins/wp-download-codes/ with PHP 7 support, cleand log & optional custom role.
+Clone of https://wordpress.org/plugins/wp-download-codes/ with PHP 7 support, cleand log, optional custom role and some other little bug fixes.
 
 === Plugin Name ===
 Contributors: misanthrop
