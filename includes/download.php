@@ -59,7 +59,7 @@ function dc_send_download_headers() {
                 if ( dc_xsendfile_enabled() ) {
                     header( 'X-Sendfile: ' . dc_file_location() . $release->filename );
                     header( 'Content-Type: application/octet-stream' );
-                    header( 'Content-Disposition: attachment; filename=\"' . urlencode( $release->filename ) . '\"' );
+                    header( 'Content-Disposition: attachment; filename=\"' . rawurlencode( $release->filename ) . '\"' );
                     exit;
                 }
 
@@ -76,9 +76,9 @@ function dc_send_download_headers() {
 
                 // Content disposition
                 if ( strpos( $_SERVER ['HTTP_USER_AGENT'], "MSIE" ) > 0 ) {
-                    header( 'Content-Disposition: attachment; filename="' . urlencode( $release->filename ) . '"' );
+                    header( 'Content-Disposition: attachment; filename="' . rawurlencode( $release->filename ) . '"' );
                 } else {
-                    header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . urlencode( $release->filename ) );
+                    header( 'Content-Disposition: attachment; filename*=UTF-8\'\'' . rawurlencode( $release->filename ) );
                 }
 
                 // Content type
